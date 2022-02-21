@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <%-include("scripts")%>
+</head>
+<body>
+    <!-- navagation section -->
+    <%- include("header")%>
+    <div class="container">
+        <!-- home section -->
+        <section id="home">
+            <h4 class="activity-title">Home</h4>
+            <p class="desc">Welcome to our blog website where you can write your dialy activites here </p>
+            <% for(i=0;i<activities.length;i++){%>
+                <h4 class="activity-title"><%=activities[i].title%></h4>
+                <% if(activities[i].post.length>100){%>
+                    <p class="desc"><%=activities[i].post.slice(0,100)%>...<form class="readMore-form" action="/readMore" method="post"><button class="readMore-link" name="post_id" value="<%=i%>"">Readmore</button></form></p>
+                <%}else {%>
+                    <p class="desc"><%=activities[i].post%></p>
+                <%}%>
+            <%}%>
+            <div>
+                <p class="compose desc">
+                    Want to compose a new activity, then click on the compose button<form class="compose-form" action="/compose" method="get"><button class="btn btn-primary compose-btn">compose</button></form>
+                </p>
+            </div>
+            
+        </section>
+    </div>
+    <%- include("footer")%>
+    
+</body>
+</html>

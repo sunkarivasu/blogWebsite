@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>compose</title>
+    <%-include("scripts")%>
+</head>
+<body>
+    <%- include("header")%>
+    <div class="container">
+        <div class="compose-form2">
+            <h3 class="compose-title">Compose</h3>
+                <form class="form" action="/compose" method="post">
+                    <div>
+                        <label for="title" class="form-label title">Title</label>
+                        <input type="text" name="title" class="form-input" id="title" required>
+                    </div>
+                    <div>
+                        <label for="post" class="form-label post">Post</label>
+                        <textarea cols="50" rows="10" name="post" id="post" class="form-input" required></textarea>
+                    </div>
+                    
+                    <button class="btn btn-primary publish-btn" type="submit">Publish</button>
+                </form>
+            
+        </div>
+    </div>
+    
+    <%- include("footer")%>
+</body>
+</html>
