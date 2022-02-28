@@ -2,6 +2,12 @@ const express = require("express")
 
 const bodyParser = require("body-parser");
 
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const mongoose = require("mongoose");
+
 const app = express();
 
 app.use(express.static("public"));
@@ -10,14 +16,41 @@ app.set("view engine","ejs");
 
 app.use(bodyParser.urlencoded({extended:true}));
 
+console.log(process.env.USER_ID,process.env.PASSWORD);
 
-var activityList = [];
+const ActivitySchema = new mongoose.Schema(
+    {
+        title:String,
+        description:String
+    }
+)
+
+const Activity = mongoose.model("Activity",ActivitySchema);
 
 
+mongoose.connect("mongodb+srv://"+process.env.USER_ID+":"+process.env.PASSWORD+"@cluster0.ypfh3.mongodb.net/BlogDB",function(err)
+{
+    if(!err)
+        console.log("connected to database");
+    else
+        console.log("Error occured while connecting to database : "+err);
+});
 
 app.get("/",function(req,res)
 {
-    res.render("index",{activities:activityList});
+    Activity.find({},function(err,result)
+    {
+        if(!err)
+        {
+            var activityList=result;
+            console.log(activityList);
+            res.render("index",{activities:activityList});
+        }
+            
+        else
+            console.log("error occured while fetching the data");
+    
+    });
 });
 
 app.get("/about",function(req,res)
@@ -45,10 +78,26 @@ app.post("/readMore",function(req,res)
 app.post("/compose",function(req,res)
 {
     //console.log(req.body)
-    var title = req.body.title;
-    var post = req.body.post;
-    activityList.push({"title":title,"post":post});
-    res.redirect("/");
+    var titleName = req.body.title;
+    var postDesc = req.body.post;
+    var Event = new Activity(
+        {
+            title:titleName,
+            description:postDesc
+        }
+    );
+    Event.save(function(err)
+    {
+        if(!err)
+        {
+            res.redirect("/"); 
+        }
+        else
+        {
+            console.log("Error occured while inserting record");
+        }
+    })
+    
 })
 
 
