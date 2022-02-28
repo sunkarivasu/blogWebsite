@@ -16,7 +16,9 @@ app.set("view engine","ejs");
 
 app.use(bodyParser.urlencoded({extended:true}));
 
-console.log(process.env.USER_ID,process.env.PASSWORD);
+// console.log(process.env.USER_ID,process.env.PASSWORD);
+
+PORT = process.env.PORT||3000;
 
 const ActivitySchema = new mongoose.Schema(
     {
@@ -101,7 +103,7 @@ app.post("/compose",function(req,res)
 })
 
 
-app.listen("3000",function()
+app.listen(PORT,function()
 {
-    console.log("server is up and running");
+    console.log(`server is up and running on ${PORT}`);
 })
