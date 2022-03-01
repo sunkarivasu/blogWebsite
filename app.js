@@ -30,7 +30,7 @@ const ActivitySchema = new mongoose.Schema(
 const Activity = mongoose.model("Activity",ActivitySchema);
 
 
-mongoose.connect("mongodb+srv://admin-vasu:vasu%40143@cluster0.ypfh3.mongodb.net/BlogDB",function(err)
+mongoose.connect("mongodb+srv://"+process.env.USER_ID+":"+process.env.PASSWORD+"@cluster0.ypfh3.mongodb.net/BlogDB",function(err)
 {
     if(!err)
         console.log("connected to database");
